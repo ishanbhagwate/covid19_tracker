@@ -2,15 +2,16 @@
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://twitter.com/b2x\_codes" target="_blank">
-
-    <img alt="Twitter: b2x\_codes" src="https://img.shields.io/twitter/follow/b2x\_codes.svg?style=social" />
-
   </a>
 </p>
 
 > An app that tracks all the COVID-19 information around the world. App shows you complete report of all affected coutries and global status as well. It is built using Flutter framework which helps ease the process of building beautiful designs.
 
 Download the app from [here](https://ishanbhagwate.com/covid19).
+
+### Show some :heart: and star the repo.
+
+[![GitHub followers](https://img.shields.io/github/followers/ishanbhagwate.svg?style=social&label=Follow)](https://github.com/ishanbhagwate/covid19_tracker)
 
 ## Screenshots
 
