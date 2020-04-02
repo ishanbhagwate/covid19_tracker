@@ -13,13 +13,7 @@
 
 ## Screenshots
 
-<img height="50%" src="screenshots/Covid19_Tracker_code.png">
-
-<!-- 
-
 ![test image size](/screenshots/Covid19_Tracker_code.png)
-
- -->
 
 ## Sources
 
