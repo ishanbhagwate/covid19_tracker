@@ -77,6 +77,7 @@ class _MyCountryState extends State<MyCountry>
   }
 
   refreshPage() {
+    print('refresh');
     setState(() {
       _loadingFuture = checkIfFirstLoad(true);
     });
@@ -484,21 +485,37 @@ class _MyCountryState extends State<MyCountry>
               child: SafeArea(
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      width: 25.0,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 25.0,
+                        ),
+                        Text(
+                          'My Country',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontFamily: 'Ubuntu',
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'My Country',
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: 'Ubuntu',
-                      ),
-                    ),
+                    // IconButton(
+                    //   padding: EdgeInsets.only(right: 10.0),
+                    //   icon: Icon(
+                    //     Icons.refresh,
+                    //     color: Colors.white,
+                    //     size: 25.0,
+                    //   ),
+                    //   onPressed: refreshPage,
+                    // ),
                   ],
                 ),
               ),
