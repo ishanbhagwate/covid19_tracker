@@ -18,7 +18,7 @@ class _AboutState extends State<About> with AutomaticKeepAliveClientMixin {
     super.initState();
 
     shareText =
-        'Check out this new app which tracks all the COVID-19 information around the world.\nApp shows you complete report of all affected coutries and global status as well.\nDownload link: ishanbhagwate.com/covid19.\nGithub link: github.com/ishanbhagwate/covid19_tracker';
+        'Check out this new app which tracks all the COVID-19 information around the world.\nApp shows you complete report of all affected coutries and global status as well.\n \nDownload link: ishanbhagwate.com/covid19 \n \nGithub link: github.com/ishanbhagwate/covid19_tracker';
     shareSubject = 'COVID-19 Tracker';
   }
 

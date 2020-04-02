@@ -680,10 +680,11 @@ class _MyCountryState extends State<MyCountry>
                 SizedBox(
                   width: 10.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    changeCountryPopupDialog();
-                  },
+                FlatButton(
+                  onPressed: changeCountryPopupDialog,
+                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  splashColor: Colors.blue.withOpacity(0.1),
+                  highlightColor: Colors.blue.withOpacity(0.07),
                   child: Text(
                     'Change country',
                     style: TextStyle(

@@ -44,6 +44,9 @@ class AboutMe extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    SizedBox(
+                      width: 10.0,
+                    ),
                     BackButton(color: Colors.white),
                     SizedBox(
                       width: 10.0,
@@ -112,7 +115,8 @@ class AboutMe extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 10.0,bottom: 10.0,
+                        top: 10.0,
+                        bottom: 10.0,
                         left: 25.0,
                         right: 25.0,
                       ),
