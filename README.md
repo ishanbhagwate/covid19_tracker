@@ -15,14 +15,14 @@
 
 <!-- <img height="50%" src="screenshots/Covid19_Tracker_code.png"> -->
 
-![test image size](/screenshots/Covid19_Tracker_code.png)
-
-{:class="img-responsive"}
+![test image size](/screenshots/Covid19_Tracker_code.png){:class="img-responsive"}
 
 ## Sources
 
 > https://www.who.int/emergencies/diseases/novel-coronavirus-2019/
+
 > https://coronavirus.jhu.edu/
+
 > https://www.cdc.gov/coronavirus/2019-nCoV/index.html
 
 ## Special thanks to [NovelCOVID/API](https://github.com/novelcovid/api) for API
@@ -30,7 +30,9 @@
 ## Building
 
 Android (armeabi-v7a): `flutter build apk` 
+
 Android (arm64-v8a): `flutter build apk --target=android-arm64` 
+
 iOS: `flutter build ios` 
 
 If you have a connected device or emulator you can run and deploy the app with `flutter run` 
