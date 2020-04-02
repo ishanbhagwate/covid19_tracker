@@ -13,9 +13,13 @@
 
 ## Screenshots
 
-<!-- <img height="50%" src="screenshots/Covid19_Tracker_code.png"> -->
+<img height="50%" src="screenshots/Covid19_Tracker_code.png">
 
-![test image size](/screenshots/Covid19_Tracker_code.png){:class="img-responsive"}
+<!-- 
+
+![test image size](/screenshots/Covid19_Tracker_code.png)
+
+ -->
 
 ## Sources
 
