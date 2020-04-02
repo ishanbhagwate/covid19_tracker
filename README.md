@@ -44,6 +44,7 @@ If you have a connected device or emulator you can run and deploy the app with `
 * Github: [@ishanbhagwate](https://github.com/ishanbhagwate)
 * LinkedIn: [@ishan-bhagwate](https://linkedin.com/in/ishan-bhagwate)
 
+
 ### :heart: Found this project useful?
 
 If you found this project useful, then please consider giving it a :star: on Github and sharing it with your friends via social media.
