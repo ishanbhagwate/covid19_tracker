@@ -23,7 +23,7 @@
 
 > https://www.cdc.gov/coronavirus/2019-nCoV/index.html
 
-## Special thanks to [NovelCOVID/API](https://github.com/novelcovid/api) & COVID19-India(https://github.com/covid19india/api) for API
+## Special thanks to [NovelCOVID/API](https://github.com/novelcovid/api) & [COVID19-India](https://github.com/covid19india/api) for API
 
 ## Building
 
