@@ -1,6 +1,7 @@
 import 'package:covid_19_tracker/models/country_detail.dart';
 import 'package:covid_19_tracker/widgets/active_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CountryDetails extends StatefulWidget {
@@ -129,13 +130,15 @@ class _CountryDetailsState extends State<CountryDetails> {
                     SizedBox(
                       width: 5.0,
                     ),
-                    Text(
-                      widget.countryDetail.country,
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: 'Ubuntu',
+                    Expanded(
+                      child: Text(
+                        widget.countryDetail.country,
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                        ),
                       ),
                     ),
                   ],
@@ -263,13 +266,13 @@ class _CountryDetailsState extends State<CountryDetails> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5.0),
                                   color:
-                                      Colors.orange.shade900.withOpacity(0.1),
+                                  Colors.orange.shade900.withOpacity(0.1),
                                 ),
                               ),
                               ActiveColorBar(
                                 activeColor: Colors.orange.shade900,
                                 bgColor:
-                                    Colors.orange.shade900.withOpacity(0.5),
+                                Colors.orange.shade900.withOpacity(0.5),
                                 countryDetail: widget.countryDetail,
                                 activeColorWidth: activeCasesColorWidth,
                               ),
@@ -538,25 +541,22 @@ class _CountryDetailsState extends State<CountryDetails> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Mortality Rate \n(approx)',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Mortality\nRate(approx)',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                            fontFamily: 'Ubuntu',
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.0,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -585,32 +585,37 @@ class _CountryDetailsState extends State<CountryDetails> {
                             ),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              widget.countryDetail.country,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                                fontFamily: 'Ubuntu',
+                        SizedBox(
+                          width: 18.0,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Text(
+                                widget.countryDetail.country,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                  fontFamily: 'Ubuntu',
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Text(
-                              '$mortalityRate%',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.red.shade800,
-                                fontFamily: 'Ubuntu',
+                              SizedBox(
+                                height: 8.0,
                               ),
-                            ),
-                          ],
+                              Text(
+                                '$mortalityRate%',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red.shade800,
+                                  fontFamily: 'Ubuntu',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
