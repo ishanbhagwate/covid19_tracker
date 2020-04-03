@@ -534,7 +534,7 @@ class _MyCountryState extends State<MyCountry>
                   ),
                 );
               } else {
-                if (snapshot.data == 0) {
+                if (snapshot.data == null) {
                   return buildCountrySelect(context);
                 }
                 return buildMyCountry(context);
@@ -652,6 +652,45 @@ class _MyCountryState extends State<MyCountry>
   }
 
   Widget buildMyCountry(BuildContext context) {
+    if(countryDetail.country.toUpperCase() == 'NULL'){
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0,horizontal: 14.0),
+          child: Column(
+            children: <Widget>[
+              CountrySelectorTile(countryName: countryDetail.country, functionName: changeCountryPopupDialog),
+              SizedBox(
+                height: MediaQuery.of(context).size.height/8,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Text('😊️',style: TextStyle(fontSize: 40),),
+                          Text('No Data Found Regarding this Country we may expect Everything is good',style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue,
+                            fontFamily: 'Ubuntu',
+                          ),),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }
     return Expanded(
       child: ListView(
         shrinkWrap: false,
@@ -660,60 +699,7 @@ class _MyCountryState extends State<MyCountry>
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      FaIcon(
-                        FontAwesomeIcons.mapMarkerAlt,
-                        color: Colors.brown,
-                        size: 25.0,
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Flexible(
-                        child: Text(
-                          countryDetail.country.toUpperCase(),
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                            fontFamily: 'Ubuntu',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                FlatButton(
-                  onPressed: changeCountryPopupDialog,
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  splashColor: Colors.blue.withOpacity(0.1),
-                  highlightColor: Colors.blue.withOpacity(0.07),
-                  child: Text(
-                    'Change country',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.blue.shade800,
-                      fontFamily: 'Ubuntu',
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: CountrySelectorTile(countryName: countryDetail.country, functionName: changeCountryPopupDialog),
           ),
           SizedBox(
             height: 20.0,
@@ -1346,4 +1332,67 @@ class _MyCountryState extends State<MyCountry>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class CountrySelectorTile extends StatelessWidget {
+  final String countryName;
+  final Function functionName;
+  CountrySelectorTile({@required this.countryName, @required this.functionName});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Flexible(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              FaIcon(
+                FontAwesomeIcons.mapMarkerAlt,
+                color: Colors.brown,
+                size: 25.0,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Flexible(
+                child: Text(
+                  countryName.toUpperCase(),
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                    fontFamily: 'Ubuntu',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 10.0,
+        ),
+        FlatButton(
+          onPressed: functionName,
+          padding: EdgeInsets.symmetric(horizontal: 5.0),
+          splashColor: Colors.blue.withOpacity(0.1),
+          highlightColor: Colors.blue.withOpacity(0.07),
+          child: Text(
+            'Change country',
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.blue.shade800,
+              fontFamily: 'Ubuntu',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
