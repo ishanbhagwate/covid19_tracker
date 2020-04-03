@@ -129,13 +129,17 @@ class _CountryDetailsState extends State<CountryDetails> {
                     SizedBox(
                       width: 5.0,
                     ),
-                    Text(
-                      widget.countryDetail.country,
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: 'Ubuntu',
+                    Expanded(
+                      child: Text(
+                        widget.countryDetail.country,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                        ),
                       ),
                     ),
                   ],
