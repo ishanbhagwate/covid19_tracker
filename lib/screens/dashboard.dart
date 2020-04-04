@@ -24,58 +24,31 @@ class _DashboardState extends State<Dashboard>
   String cases, deaths, recovered, active;
   int timestamp;
   String updatedOn;
-  Map<String, dynamic> mainDetails;
+  CountryDetail mainDetails;
 
   DateTime dateTime;
 
   Future _allCountriesFuture;
   List<CountryDetail> _allCountriesDetailsList;
 
-  Future totalCasesFuture;
-
   @override
   void initState() {
     super.initState();
 
     updatedOn = '--';
-    totalCasesFuture = getAllCountries();
-    _allCountriesFuture = getAllCountriesDetails();
+    _allCountriesFuture = getAllCountries();
   }
 
   refresh() async {
     setState(() {
       updatedOn = 'Refreshing';
-      totalCasesFuture = getAllCountries();
-      _allCountriesFuture = getAllCountriesDetails();
+      _allCountriesFuture = getAllCountries();
     });
   }
 
   Future getAllCountries() async {
-    final response = await client.get('https://corona.lmao.ninja/all');
+    // final response = await client.get('https://corona.lmao.ninja/all');
 
-    if (response.statusCode == 200) {
-      mainDetails = json.decode(response.body);
-      cases = mainDetails['cases'].toString();
-      deaths = mainDetails['deaths'].toString();
-      recovered = mainDetails['recovered'].toString();
-      active = mainDetails['active'].toString();
-      timestamp = mainDetails['updated'];
-
-      dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
-
-      setState(() {
-        updatedOn = (DateFormat('dd MMM yyyy, hh:mm a').format(dateTime));
-      });
-    } else {
-      throw Exception('Failed to get all countries names');
-    }
-
-    print(cases);
-
-    return mainDetails;
-  }
-
-  Future getAllCountriesDetails() async {
     final response =
         await client.get('https://corona.lmao.ninja/countries?sort=cases');
 
@@ -95,10 +68,52 @@ class _DashboardState extends State<Dashboard>
       throw Exception('Failed to get all countries names');
     }
 
-    print(_allCountriesDetailsList);
+    mainDetails = _allCountriesDetailsList[0];
+
+    cases = mainDetails.cases;
+    deaths = mainDetails.deaths;
+    recovered = mainDetails.recovered;
+    active = mainDetails.active;
+    timestamp = mainDetails.updated;
+
+    dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+    setState(() {
+      updatedOn = (DateFormat('dd MMM yyyy, hh:mm a').format(dateTime));
+    });
+
+    //remove 1st element
+    _allCountriesDetailsList.removeAt(0);
 
     return _allCountriesDetailsList;
   }
+
+  // Future getAllCountriesDetails() async {
+  //   final response =
+  //       await client.get('https://corona.lmao.ninja/countries?sort=cases');
+
+  //   if (response.statusCode == 200) {
+  //     List parsedJson = json.decode(response.body);
+
+  //     print(parsedJson.length);
+
+  //     List<CountryDetail> tempList = [];
+
+  //     for (var res in parsedJson) {
+  //       CountryDetail allCountriesDetails = CountryDetail(res);
+  //       tempList.add(allCountriesDetails);
+  //     }
+  //     _allCountriesDetailsList = tempList;
+  //   } else {
+  //     throw Exception('Failed to get all countries names');
+  //   }
+
+  //   _allCountriesDetailsList.removeAt(0);
+
+  //   print(_allCountriesDetailsList);
+
+  //   return _allCountriesDetailsList;
+  // }
 
   void _sendToCountryDetail(CountryDetail countryDetail, double width) {
     Navigator.push(
@@ -114,19 +129,23 @@ class _DashboardState extends State<Dashboard>
   }
 
   _sendToDetails() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MainDetails(mainDetails: mainDetails),
-      ),
-    );
+    if (_allCountriesDetailsList != null) {
+      if (_allCountriesDetailsList.length > 0) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainDetails(mainDetails: mainDetails),
+          ),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-          body: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -230,7 +249,7 @@ class _DashboardState extends State<Dashboard>
                         height: 25.0,
                       ),
                       FutureBuilder(
-                        future: totalCasesFuture,
+                        future: _allCountriesFuture,
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return Shimmer.fromColors(
@@ -272,9 +291,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
                                           height: 25.0,
                                         ),
                                         SizedBox(
@@ -286,9 +306,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.15,
                                           height: 20.0,
                                         ),
                                       ],
@@ -316,9 +337,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
                                           height: 25.0,
                                         ),
                                         SizedBox(
@@ -330,9 +352,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.15,
                                           height: 20.0,
                                         ),
                                       ],
@@ -360,9 +383,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
                                           height: 25.0,
                                         ),
                                         SizedBox(
@@ -374,9 +398,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.15,
                                           height: 20.0,
                                         ),
                                       ],
@@ -415,11 +440,13 @@ class _DashboardState extends State<Dashboard>
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
@@ -463,7 +490,8 @@ class _DashboardState extends State<Dashboard>
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
@@ -507,7 +535,8 @@ class _DashboardState extends State<Dashboard>
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
@@ -584,7 +613,8 @@ class _DashboardState extends State<Dashboard>
                             context,
                             MaterialPageRoute(
                               builder: (context) => AllCountries(
-                                allCountriesDetailsList: _allCountriesDetailsList,
+                                allCountriesDetailsList:
+                                    _allCountriesDetailsList,
                                 mainDetails: mainDetails,
                               ),
                             ),

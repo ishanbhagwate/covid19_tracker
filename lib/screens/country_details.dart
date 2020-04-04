@@ -2,11 +2,12 @@ import 'package:covid_19_tracker/models/country_detail.dart';
 import 'package:covid_19_tracker/widgets/active_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' show Client;
 
 class CountryDetails extends StatefulWidget {
   final CountryDetail countryDetail;
   final double width;
-  final Map<String, dynamic> mainDetails;
+  final CountryDetail mainDetails;
   CountryDetails({this.countryDetail, this.width, this.mainDetails});
 
   @override
@@ -24,6 +25,7 @@ class _CountryDetailsState extends State<CountryDetails> {
       deathsPerMill,
       casesPerMil;
 
+  String countryIso3;
   String mortalityRate, mortalityRateGlobal;
 
   double activeCasesColorWidth,
@@ -31,6 +33,9 @@ class _CountryDetailsState extends State<CountryDetails> {
       criticalCasesColorWidth;
 
   double screenWidth;
+  Client client = Client();
+
+  // Map<String, dynamic> _countryHistoricalMap;
 
   @override
   void initState() {
@@ -38,6 +43,7 @@ class _CountryDetailsState extends State<CountryDetails> {
 
     screenWidth = widget.width;
 
+    countryIso3 = widget.countryDetail.countryInfo['iso3'];
     totalCases = int.parse(widget.countryDetail.cases);
     activeCases = int.parse(widget.countryDetail.active);
     recoveredCases = int.parse(widget.countryDetail.recovered);
@@ -65,8 +71,8 @@ class _CountryDetailsState extends State<CountryDetails> {
       deathsPerMill = 0;
     }
 
-    var globalDeaths = widget.mainDetails['deaths'];
-    var globalCases = widget.mainDetails['cases'];
+    var globalDeaths = int.parse(widget.mainDetails.deaths);
+    var globalCases = int.parse(widget.mainDetails.cases);
 
     mortalityRate = (deaths / totalCases * 100).toStringAsFixed(1);
     mortalityRateGlobal = (globalDeaths / globalCases * 100).toStringAsFixed(1);
@@ -87,6 +93,23 @@ class _CountryDetailsState extends State<CountryDetails> {
     // print(recoveredCasesColorWidth);
     // print(criticalCasesColorWidth);
   }
+
+  // Future getHistoricalData() async {
+  //   final response = await client
+  //       .get('https://corona.lmao.ninja/v2/historical/$countryIso3');
+
+  //   if (response.statusCode == 200) {
+  //     var parsedJson = json.decode(response.body);
+
+  //     _countryHistoricalMap = parsedJson;
+  //   } else {
+  //     throw Exception('Failed to get historical data');
+  //   }
+
+  //   print(_countryHistoricalMap);
+
+  //   return _countryHistoricalMap;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -710,6 +733,9 @@ class _CountryDetailsState extends State<CountryDetails> {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 10.0,
                 ),
               ],
             ),

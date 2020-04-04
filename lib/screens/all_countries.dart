@@ -10,7 +10,7 @@ import 'country_details.dart';
 
 class AllCountries extends StatefulWidget {
   final List<CountryDetail> allCountriesDetailsList;
-  final Map<String, dynamic> mainDetails;
+  final CountryDetail mainDetails;
 
   AllCountries({this.allCountriesDetailsList, this.mainDetails});
 
@@ -251,8 +251,7 @@ class _AllCountriesState extends State<AllCountries> {
                         },
                         child: AllCountriesItem(
                           countryDetail: snapshot.data[index],
-                          countryCode: snapshot.data[index]
-                              .countryInfo['iso2']
+                          countryCode: snapshot.data[index].countryInfo['iso2']
                               .toString()
                               .toLowerCase(),
                         ),
