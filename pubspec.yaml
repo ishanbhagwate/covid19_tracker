@@ -1,6 +1,6 @@
 name: covid_19_tracker
 description: Covid 19 tracker to help people know the situation.
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
