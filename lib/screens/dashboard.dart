@@ -25,7 +25,7 @@ class _DashboardState extends State<Dashboard>
   int timestamp;
   String updatedOn;
   Map<String, dynamic> mainDetails;
-
+  int deathsPerMill, casesPerMil;
   DateTime dateTime;
 
   Future _allCountriesFuture;
@@ -62,6 +62,22 @@ class _DashboardState extends State<Dashboard>
       timestamp = mainDetails['updated'];
 
       dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+      // if (mainDetails['casesPerOneMillion'] != 'null') {
+      //   casesPerMil = int.parse(
+      //     double.parse(mainDetails['casesPerOneMillion']).round().toString(),
+      //   );
+      // } else {
+      //   casesPerMil = 0;
+      // }
+
+      // if (mainDetails['deathsPerOneMillion'] != 'null') {
+      //   deathsPerMill = int.parse(
+      //     double.parse(mainDetails['deathsPerOneMillion']).round().toString(),
+      //   );
+      // } else {
+      //   deathsPerMill = 0;
+      // }
 
       setState(() {
         updatedOn = (DateFormat('dd MMM yyyy, hh:mm a').format(dateTime));
@@ -114,19 +130,21 @@ class _DashboardState extends State<Dashboard>
   }
 
   _sendToDetails() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MainDetails(mainDetails: mainDetails),
-      ),
-    );
+    if (mainDetails != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainDetails(mainDetails: mainDetails),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-          body: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -272,9 +290,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
                                           height: 25.0,
                                         ),
                                         SizedBox(
@@ -286,9 +305,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.15,
                                           height: 20.0,
                                         ),
                                       ],
@@ -316,9 +336,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
                                           height: 25.0,
                                         ),
                                         SizedBox(
@@ -330,9 +351,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.15,
                                           height: 20.0,
                                         ),
                                       ],
@@ -360,9 +382,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
                                           height: 25.0,
                                         ),
                                         SizedBox(
@@ -374,9 +397,10 @@ class _DashboardState extends State<Dashboard>
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.15,
                                           height: 20.0,
                                         ),
                                       ],
@@ -415,11 +439,13 @@ class _DashboardState extends State<Dashboard>
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
@@ -463,7 +489,8 @@ class _DashboardState extends State<Dashboard>
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
@@ -507,7 +534,8 @@ class _DashboardState extends State<Dashboard>
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: <Widget>[
@@ -584,7 +612,8 @@ class _DashboardState extends State<Dashboard>
                             context,
                             MaterialPageRoute(
                               builder: (context) => AllCountries(
-                                allCountriesDetailsList: _allCountriesDetailsList,
+                                allCountriesDetailsList:
+                                    _allCountriesDetailsList,
                                 mainDetails: mainDetails,
                               ),
                             ),

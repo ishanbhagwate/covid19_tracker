@@ -16,6 +16,7 @@ class _MainDetailsState extends State<MainDetails> {
   String cases, deaths, recovered, active;
   Map<String, double> pieChartData = new Map();
   Client client = Client();
+  int deathsPerMill, casesPerMil;
 
   @override
   void initState() {
@@ -25,6 +26,26 @@ class _MainDetailsState extends State<MainDetails> {
     deaths = widget.mainDetails['deaths'].toString();
     recovered = widget.mainDetails['recovered'].toString();
     active = widget.mainDetails['active'].toString();
+
+    // if (widget.mainDetails['casesPerOneMillion'] != 'null') {
+    //   casesPerMil = int.parse(
+    //     double.parse(widget.mainDetails['casesPerOneMillion'])
+    //         .round()
+    //         .toString(),
+    //   );
+    // } else {
+    //   casesPerMil = 0;
+    // }
+
+    // if (widget.mainDetails['deathsPerOneMillion'] != 'null') {
+    //   deathsPerMill = int.parse(
+    //     double.parse(widget.mainDetails['deathsPerOneMillion'])
+    //         .round()
+    //         .toString(),
+    //   );
+    // } else {
+    //   deathsPerMill = 0;
+    // }
 
     pieChartData.putIfAbsent('Active', () => double.parse(active));
     pieChartData.putIfAbsent('Deaths', () => double.parse(deaths));
@@ -305,6 +326,97 @@ class _MainDetailsState extends State<MainDetails> {
               ),
             ),
           ),
+          // SizedBox(
+          //   height: 20.0,
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 15.0),
+          //     decoration: BoxDecoration(
+          //       color: Colors.grey.withOpacity(0.1),
+          //       borderRadius: BorderRadius.circular(20.0),
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       mainAxisSize: MainAxisSize.max,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: <Widget>[
+          //         Row(
+          //           crossAxisAlignment: CrossAxisAlignment.center,
+          //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //           children: <Widget>[
+          //             Text(
+          //               'Per One Million',
+          //               style: TextStyle(
+          //                 fontSize: 18.0,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black87,
+          //                 fontFamily: 'Ubuntu',
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         Column(
+          //           crossAxisAlignment: CrossAxisAlignment.center,
+          //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //           children: <Widget>[
+          //             Text(
+          //               'Cases',
+          //               style: TextStyle(
+          //                 fontSize: 18.0,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black87,
+          //                 fontFamily: 'Ubuntu',
+          //               ),
+          //             ),
+          //             SizedBox(
+          //               height: 15.0,
+          //             ),
+          //             Text(
+          //               casesPerMil.toString(),
+          //               overflow: TextOverflow.clip,
+          //               style: TextStyle(
+          //                 fontSize: 18.0,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.orange.shade900,
+          //                 fontFamily: 'Ubuntu',
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         Column(
+          //           crossAxisAlignment: CrossAxisAlignment.center,
+          //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //           children: <Widget>[
+          //             Text(
+          //               'Death\'s',
+          //               style: TextStyle(
+          //                 fontSize: 18.0,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black87,
+          //                 fontFamily: 'Ubuntu',
+          //               ),
+          //             ),
+          //             SizedBox(
+          //               height: 15.0,
+          //             ),
+          //             Text(
+          //               deathsPerMill.toString(),
+          //               overflow: TextOverflow.clip,
+          //               style: TextStyle(
+          //                 fontSize: 18.0,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.red.shade800,
+          //                 fontFamily: 'Ubuntu',
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
