@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:covid_19_tracker/models/country_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show Client;
 import 'package:pie_chart/pie_chart.dart';
 
 class MainDetails extends StatefulWidget {
-  final CountryDetail mainDetails;
+  final Map<String, dynamic> mainDetails;
 
   MainDetails({this.mainDetails});
 
@@ -18,32 +17,14 @@ class _MainDetailsState extends State<MainDetails> {
   Map<String, double> pieChartData = new Map();
   Client client = Client();
 
-  int deathsPerMill, casesPerMil;
-
   @override
   void initState() {
     super.initState();
 
-    cases = widget.mainDetails.cases;
-    deaths = widget.mainDetails.deaths;
-    recovered = widget.mainDetails.recovered;
-    active = widget.mainDetails.active;
-
-    if (widget.mainDetails.casesPerOneMillion != 'null') {
-      casesPerMil = int.parse(
-        double.parse(widget.mainDetails.casesPerOneMillion).round().toString(),
-      );
-    } else {
-      casesPerMil = 0;
-    }
-
-    if (widget.mainDetails.deathsPerOneMillion != 'null') {
-      deathsPerMill = int.parse(
-        double.parse(widget.mainDetails.deathsPerOneMillion).round().toString(),
-      );
-    } else {
-      deathsPerMill = 0;
-    }
+    cases = widget.mainDetails['cases'].toString();
+    deaths = widget.mainDetails['deaths'].toString();
+    recovered = widget.mainDetails['recovered'].toString();
+    active = widget.mainDetails['active'].toString();
 
     pieChartData.putIfAbsent('Active', () => double.parse(active));
     pieChartData.putIfAbsent('Deaths', () => double.parse(deaths));
@@ -97,343 +78,231 @@ class _MainDetailsState extends State<MainDetails> {
               ),
             ),
           ),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-              physics: BouncingScrollPhysics(),
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(20.0),
-                  padding: EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 8.0,
-                        spreadRadius: 8.0,
-                        offset: Offset(0, 2),
-                        color: Colors.black.withOpacity(0.01),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green.withOpacity(0.15),
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              size: 15.0,
-                              color: Colors.orange.shade900,
-                            ),
-                            width: 25.0,
-                            height: 25.0,
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Text(
-                            cases,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange.shade900,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            'Infected',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green.withOpacity(0.15),
-                            ),
-                            child: Icon(
-                              Icons.close,
-                              size: 13.0,
-                              color: Colors.red.shade700,
-                            ),
-                            width: 25.0,
-                            height: 25.0,
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Text(
-                            deaths,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red.shade700,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            'Deaths',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green.withOpacity(0.15),
-                            ),
-                            child: Icon(
-                              Icons.favorite,
-                              size: 11.0,
-                              color: Colors.pink.shade400,
-                            ),
-                            width: 25.0,
-                            height: 25.0,
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Text(
-                            recovered,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.pink.shade400,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            'Recovered',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                AspectRatio(
-                  aspectRatio: 1.5,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 8.0,
-                          spreadRadius: 8.0,
-                          offset: Offset(0, 2),
-                          color: Colors.black.withOpacity(0.01),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            'Covid-19',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blueGrey.shade800,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                right: 10.0, left: 10.0, bottom: 15.0),
-                            child: PieChart(
-                              legendStyle: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                                fontFamily: 'Ubuntu',
-                              ),
-                              dataMap: pieChartData,
-                              animationDuration: Duration(milliseconds: 800),
-                              chartLegendSpacing: 32.0,
-                              chartRadius:
-                                  MediaQuery.of(context).size.width / 2,
-                              showChartValuesInPercentage: true,
-                              showChartValues: true,
-                              showChartValuesOutside: true,
-                              chartValueBackgroundColor: Colors.grey[200],
-                              colorList: [
-                                Colors.orange.shade600,
-                                Colors.red.shade900,
-                                Colors.blue,
-                              ],
-                              showLegends: true,
-                              legendPosition: LegendPosition.right,
-                              decimalPlaces: 1,
-                              showChartValueLabel: true,
-                              initialAngle: 0,
-                              chartValueStyle: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blueGrey.shade800,
-                                fontFamily: 'Ubuntu',
-                              ),
-                              chartType: ChartType.disc,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15.0),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 8.0,
-                          spreadRadius: 8.0,
-                          offset: Offset(0, 2),
-                          color: Colors.black.withOpacity(0.01),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Per One Million',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Cases',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Text(
-                              casesPerMil.toString(),
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.orange.shade900,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Death\'s',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Text(
-                              deathsPerMill.toString(),
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.red.shade800,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
+          Container(
+            margin: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 8.0,
+                  spreadRadius: 8.0,
+                  offset: Offset(0, 2),
+                  color: Colors.black.withOpacity(0.01),
                 ),
               ],
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green.withOpacity(0.15),
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        size: 15.0,
+                        color: Colors.orange.shade900,
+                      ),
+                      width: 25.0,
+                      height: 25.0,
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Text(
+                      cases,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange.shade900,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      'Infected',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green.withOpacity(0.15),
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        size: 13.0,
+                        color: Colors.red.shade700,
+                      ),
+                      width: 25.0,
+                      height: 25.0,
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Text(
+                      deaths,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red.shade700,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      'Deaths',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green.withOpacity(0.15),
+                      ),
+                      child: Icon(
+                        Icons.favorite,
+                        size: 11.0,
+                        color: Colors.pink.shade400,
+                      ),
+                      width: 25.0,
+                      height: 25.0,
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Text(
+                      recovered,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.pink.shade400,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      'Recovered',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          AspectRatio(
+            aspectRatio: 1.5,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 8.0,
+                    spreadRadius: 8.0,
+                    offset: Offset(0, 2),
+                    color: Colors.black.withOpacity(0.01),
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      'Covid-19',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.blueGrey.shade800,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 10.0, left: 10.0, bottom: 15.0),
+                      child: PieChart(
+                        legendStyle: TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontFamily: 'Ubuntu',
+                        ),
+                        dataMap: pieChartData,
+                        animationDuration: Duration(milliseconds: 800),
+                        chartLegendSpacing: 32.0,
+                        chartRadius: MediaQuery.of(context).size.width / 2,
+                        showChartValuesInPercentage: true,
+                        showChartValues: true,
+                        showChartValuesOutside: true,
+                        chartValueBackgroundColor: Colors.grey[200],
+                        colorList: [
+                          Colors.orange.shade600,
+                          Colors.red.shade900,
+                          Colors.blue,
+                        ],
+                        showLegends: true,
+                        legendPosition: LegendPosition.right,
+                        decimalPlaces: 1,
+                        showChartValueLabel: true,
+                        initialAngle: 0,
+                        chartValueStyle: TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.blueGrey.shade800,
+                          fontFamily: 'Ubuntu',
+                        ),
+                        chartType: ChartType.disc,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],

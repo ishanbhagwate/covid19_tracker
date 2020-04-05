@@ -1,6 +1,6 @@
 name: covid_19_tracker
 description: Covid 19 tracker to help people know the situation.
-version: 1.0.1
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -23,7 +23,6 @@ dependencies:
   transparent_image: ^1.0.0
   flutter_email_sender: ^2.2.2
   flutter_linkify: ^3.1.0
-  fl_chart: ^0.8.7
 
   cupertino_icons: ^0.1.2
 

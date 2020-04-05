@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:covid_19_tracker/widgets/active_bar.dart';
 import 'package:covid_19_tracker/widgets/change_country_popup.dart';
-import 'package:covid_19_tracker/widgets/most_infected_countries_shimmer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' show Client;
 import 'package:covid_19_tracker/models/countries_list.dart';
@@ -12,8 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import '../widgets/my_country_shimmer.dart';
-import '../widgets/most_affected_states.dart';
-import 'all_states.dart';
 
 class MyCountry extends StatefulWidget {
   final double screenWidth;
@@ -34,8 +31,6 @@ class _MyCountryState extends State<MyCountry>
   Client client = Client();
   CountryDetail countryDetail;
 
-  List statesList;
-
   String countryNew;
 
   List countryJson;
@@ -49,7 +44,6 @@ class _MyCountryState extends State<MyCountry>
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future _loadingFuture;
-  Future _allStatesFuture;
 
   CountriesList countriesList = CountriesList();
 
@@ -119,10 +113,6 @@ class _MyCountryState extends State<MyCountry>
       }
 
       print(countryDetail.active);
-
-      if (_currentSelectedCountryCode == 'IN') {
-        getStatesData();
-      }
 
       try {
         totalCases = int.parse(countryDetail.cases);
@@ -206,10 +196,6 @@ class _MyCountryState extends State<MyCountry>
 
           print(countryDetail.active);
 
-          if (_currentSelectedCountryCode == 'IN') {
-            getStatesData();
-          }
-
           try {
             totalCases = int.parse(countryDetail.cases);
             activeCases = int.parse(countryDetail.active);
@@ -270,10 +256,6 @@ class _MyCountryState extends State<MyCountry>
           }
 
           print(countryDetail.active);
-
-          if (_currentSelectedCountryCode == 'IN') {
-            getStatesData();
-          }
 
           try {
             totalCases = int.parse(countryDetail.cases);
@@ -365,10 +347,6 @@ class _MyCountryState extends State<MyCountry>
 
     print(countryDetail.active);
 
-    if (_currentSelectedCountryCode == 'IN') {
-      getStatesData();
-    }
-
     try {
       totalCases = int.parse(countryDetail.cases);
       activeCases = int.parse(countryDetail.active);
@@ -410,31 +388,6 @@ class _MyCountryState extends State<MyCountry>
     print(countryDetail.active);
 
     return countryDetail;
-  }
-
-  getStatesData() {
-    _allStatesFuture = getAllStatesData();
-  }
-
-  Future getAllStatesData() async {
-    // final stateResponse = await client
-    //     .get('https://api.covid19india.org/v2/state_district_wise.json');
-    final stateResponse =
-        await client.get('https://api.covid19india.org/data.json');
-
-    if (stateResponse.statusCode == 200) {
-      var temp = json.decode(stateResponse.body);
-
-      statesList = temp['statewise'];
-
-      statesList.removeAt(0);
-    } else {
-      print('state data not available');
-      showPopupNoDataAvailable();
-      return 0;
-    }
-
-    return statesList;
   }
 
   getCountrieList() {
@@ -1280,114 +1233,9 @@ class _MyCountryState extends State<MyCountry>
               ),
             ),
           ),
-          _currentSelectedCountryCode == "IN"
-              ? Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            'Most Affected States',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                              fontFamily: 'Ubuntu',
-                            ),
-                          ),
-                          FlatButton(
-                            padding: EdgeInsets.all(0),
-                            splashColor: Colors.blue.withOpacity(0.1),
-                            highlightColor: Colors.blue.withOpacity(0.07),
-                            onPressed: () {
-                              if (statesList != null) {
-                                if (statesList.length > 0) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AllStates(
-                                        statesList: statesList,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            child: Text(
-                              'View All',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blue.shade700,
-                                fontFamily: 'Ubuntu',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FutureBuilder(
-                      future: _allStatesFuture,
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 250.0,
-                            child: Shimmer.fromColors(
-                              period: Duration(milliseconds: 800),
-                              baseColor: Colors.grey.withOpacity(0.5),
-                              highlightColor: Colors.black.withOpacity(0.5),
-                              child: ListView.builder(
-                                padding:
-                                    EdgeInsets.only(left: 10.0, right: 10.0),
-                                physics: NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: 3,
-                                itemBuilder: (context, index) {
-                                  return MostInfectedCountriesShimmer();
-                                },
-                              ),
-                            ),
-                          );
-                        } else {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 250.0,
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: false,
-                              addAutomaticKeepAlives: true,
-                              itemCount: 5,
-                              itemBuilder: (context, index) {
-                                return MostInfectedState(
-                                  stateDetails: statesList[index],
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                )
-              : SizedBox(),
         ],
       ),
     );
-  }
-
-  Widget buildStatesWidget() {
-    return Text('data');
   }
 
   Widget buildSelectCountry(BuildContext context, bool isNotAvailable) {

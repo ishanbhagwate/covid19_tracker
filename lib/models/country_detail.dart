@@ -10,7 +10,6 @@ class CountryDetail {
   String critical;
   String casesPerOneMillion;
   String deathsPerOneMillion;
-  int updated;
 
   CountryDetail(result) {
     this.country = result['country'].toString();
@@ -24,6 +23,5 @@ class CountryDetail {
     this.critical = result['critical'].toString();
     this.casesPerOneMillion = result['casesPerOneMillion'].toString();
     this.deathsPerOneMillion = result['deathsPerOneMillion'].toString();
-    this.updated = result['updated'];
   }
 }

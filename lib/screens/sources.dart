@@ -164,32 +164,7 @@ class _SourcesState extends State<Sources> {
                 height: 20.0,
               ),
               Linkify(
-                text: '3) API : https://github.com/novelcovid/api',
-                onOpen: (link) async {
-                  if (await canLaunch(link.url)) {
-                    await launch(link.url);
-                  } else {
-                    throw 'Could not launch $link';
-                  }
-                },
-                linkStyle: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.blue.shade800,
-                  fontFamily: 'Ubuntu',
-                ),
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black87,
-                  fontFamily: 'Ubuntu',
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Linkify(
-                text: '4) API (India): https://github.com/covid19india/api',
+                text: '3) API used: https://github.com/novelcovid/api',
                 onOpen: (link) async {
                   if (await canLaunch(link.url)) {
                     await launch(link.url);
