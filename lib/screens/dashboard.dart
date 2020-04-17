@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard>
   }
 
   Future getAllCountries() async {
-    final response = await client.get('https://corona.lmao.ninja/all');
+    final response = await client.get('https://corona.lmao.ninja/v2/all');
 
     if (response.statusCode == 200) {
       mainDetails = json.decode(response.body);
@@ -93,7 +93,7 @@ class _DashboardState extends State<Dashboard>
 
   Future getAllCountriesDetails() async {
     final response =
-        await client.get('https://corona.lmao.ninja/countries?sort=cases');
+        await client.get('https://corona.lmao.ninja/v2/countries?sort=cases');
 
     if (response.statusCode == 200) {
       List parsedJson = json.decode(response.body);

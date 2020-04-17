@@ -106,7 +106,7 @@ class _MyCountryState extends State<MyCountry>
       prefs.setString('countryCode', _currentSelectedCountryCode);
 
       final response = await client.get(
-          'https://corona.lmao.ninja/countries/$_currentSelectedCountryCode');
+          'https://corona.lmao.ninja/v2/countries/$_currentSelectedCountryCode');
 
       if (response.statusCode == 200) {
         var temp = json.decode(response.body);
