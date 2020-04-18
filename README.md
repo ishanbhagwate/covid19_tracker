@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to covid_19_tracker 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.1.1-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.1.2-blue.svg?cacheSeconds=2592000" />
 </p>
 
 > An app that tracks all the COVID-19 information around the world. App shows you complete report of all affected coutries and global status as well. It is built using Flutter framework which helps ease the process of building beautiful designs.
